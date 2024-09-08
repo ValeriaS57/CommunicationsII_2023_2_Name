@@ -1,162 +1,69 @@
+\section{Resultados}
 
-labcom@labcom-Profe:~$ git --version               							 (Con esto miramos la version de Git)
+Se ejecutó los bloques de la Fig.2 con una señal cuadrada de amplitud 1, offset -0.5 y frecuencia 2 [kHz], obteniendo como resultado para el acumulador una señal triangular de la misma frecuencia, es decir, 2 [kHz] y una amplitud diferente,  lo cual corresponde con el comportamiento teórico donde la integral de una señal cuadrada periódica resulta en una señal triangular. Mientras que en el diferenciador se observa la variación de la señal entre 2 valores que van creciendo en el transcurso del tiempo y corresponde a la razón, se cambió de la señal cuadrada.\\
 
- Rta:   git version 2.25.1
+\noindent
+ Mientras en el caso de la señal vectorial se utilizó el vector=[-1,0,1] con el fin de visualizar un correcto funcionamiento de los bloques, en el caso del acumulador varía entre los valores y al sumarse se anulan  obteniendo cero, repitiendo este procedimiento la cantidad de veces que se repita el vector. Mientras que en el caso del diferenciador observamos que va variando su signo y aumentando su magnitud en el transcurso del tiempo, tal como se visualiza en la Fig. \ref{fig:punto2_a}.3
+ \smallskip\\
 
+ {\centering
+    \includegraphics[scale=0.20]{figs/Resultados_Acu_Diff.png}\\
+    Fig.3.3 Resultados obtenidos del bloque acumulador y diferenciador tanto para una señal periódica cuadrada y un vector repetitivo. 
+    \label{fig:punto2_a}
+    }\smallskip\\
+    \noindent
+    Mientras que en el caso del bloque estadístico y su aplicación (Ver Fig.\ref{fig:punto1_b}.2), se realizó la evaluación de los bloques, variando el ruido Gaussiano desde 0 hasta 0.1, y registrando sus valores para su posterior comparación. \\
+    \smallskip\\
+    Calculado sus valores teóricos obtenemos:
 
-labcom@labcom-Profe:~$ ssh-keygen -t ed25519        				          		 (Con esto generabamos la clave)
+\begin{equation}
+    \text{Media}=\frac{1}{\frac{1}{2000}}\int_{0}^{\frac{1}{2000}} sin( 4000 \pi x) \,dx = 0
+\end{equation}
 
- Rta:   Generating public/private ed25519 key pair.				                         (Se genera clave publica y privada)  			
-        Enter file in which to save the key (/home/labcom/.ssh/id_ed25519):                              (Clave adicional para ver donde esta esta clave o ingreso) 
-        Enter passphrase (empty for no passphrase):
-        Enter same passphrase again:
-        Your identification has been saved in /home/labcom/.ssh/id_ed25519                               (Donde esta guardado)
-	Your public key has been saved in /home/labcom/.ssh/id_ed25519.pub
-	The key fingerprint is:
-	SHA256:9T9aRoOoNpHTXvh7adjSL9GqgI9+aq4i1IIQE+k+6sA labcom@labcom-Profe
-	The key's randomart image is:
-	+--[ED25519 256]--+
-	|.o |
-	|+ |
-	|.o . |
-	|.. + + . |
-	|o. . S + + o. |
-	|ooo . * o o...|
-	|oE.. = o .+=+ |
-	|o . . ..+..o=O. |
-	|.. . ..==o. += o.|
-	+----[SHA256]-----+
+\begin{equation}
+    \text{M. C.}=\frac{1}{\frac{1}{2000}}\int_{0}^{\frac{1}{2000}} sin( 4000 \pi x)^2 \,dx = \frac{1}{2}
+\end{equation}
 
-labcom@labcom-Profe:~$ gedit /home/labcom/.ssh/id_ed25519.pub						(Con el comando gedit abrimos la carpeta para editar en este archivo)
-												         "Edita contenido de clave publica"
+\begin{equation}
+    \text{RMS}=\sqrt{\frac{1}{\frac{1}{2000}}\int_{0}^{\frac{1}{2000}} sin( 4000 \pi x)^2 \,dx} = \frac{1}{\sqrt{2}}
+\end{equation}
 
------------------------------
+\begin{equation}
+    \text{Potencia}=\frac{1}{\frac{1}{2000}}\int_{0}^{\frac{1}{2000}} sin( 4000 \pi x)^2 \,dx= \frac{1}{2}
+\end{equation}
 
-labcom@labcom-Profe:~$ mkdir /home/labcom/grupoONV10						        (Creamos una nueva carpeta "grupoONV10", dentro del directorio "home" del usuario "labcom")
-labcom@labcom-Profe:~$ ls /home/labcom									ls es para ver que hay dentro de la direccion establecida	
- Rta:   asd.grc grupoONV10 prueba.py
-        asd.py Imágenes Prueba.py
-        default_epy_block_0.py lol_epy_block_0.py Público
-	default_epy_block_1.py lol_epy_block_2.py __pycache__
-	default.py lol.grc snap
-	Descargas lol.py TransmisorQAM.grc
-	Documentos 'Modulador QAM.grc' TransmisorQAM.py
-	Escritorio Modulador_QAM.grc untitled.grc
-	gmsk.py ModuladorQAM.grc Vídeos
-	gr-ModulosEfren Música workarea
-	gr-satellites Plantillas
+\begin{equation}
+    \text{D.E.}=\sqrt{\frac{1}{\frac{1}{2000}}\int_{0}^{\frac{1}{2000}} \left(sin( 4000 \pi x) - 0 \right)^2\,dx}= \frac{1}{\sqrt{2}}   
+\end{equation}\\
+\noindent
+Como se observa en la Tabla \ref{tab:my_label}.1 los valores más cercanos a los teóricos obtenidos en las ecuaciones (1,2,3,4,5) se obtienen a través de la implementación de la aplicación (2) cuando el ruido es cero, siendo estos iguales, aunque se destaca que con los bloques de estadística (1) varía levemente solo en el 4 o 3 decimal, si aumentamos el ruido se mantiene ese patrón con excepción de la media.
+\\
 
-labcom@labcom-Profe:~$ cd grupoONV10								                 (Cambiamos de directorio: "change directory")
-labcom@labcom-Profe:~/grupoONV10$ git clone git@github.com:ValeriaS57/CommunicationsII_2024_2_B1_ONV.git         (Clonamos un repositorio de Git desde GitHub en nuestra máquina local)
- Rta:   Clonando en 'CommunicationsII_2024_2_B1_ONV'...
-        The authenticity of host 'github.com (140.82.112.4)' can't be established.
-	ECDSA key fingerprint is SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM.
-	Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-	Warning: Permanently added 'github.com,140.82.112.4' (ECDSA) to the list of known hosts.
-	remote: Enumerating objects: 6, done.
-	remote: Counting objects: 100% (6/6), done.
-	remote: Compressing objects: 100% (4/4), done.
-	remote: Total 6 (delta 1), reused 0 (delta 0), pack-reused 0
-	Recibiendo objetos: 100% (6/6), listo.
-	Resolviendo deltas: 100% (1/1), listo.
-
-labcom@labcom-Profe:~/grupoONV10$ ls						                        (Para comprobar si se copio correctamente)
- Rta:   CommunicationsII_2024_2_B1_ONV
-
-labcom@labcom-Profe:~/grupoONV10$ ls CommunicationsII_2024_2_B1_ONV				        (Mirabamos el contenido de nuestro repositorio)
- Rta:   README.md
-
-labcom@labcom-Profe:~/grupoONV10$ ll									(Muestra de forma detallada)	
- Rta:   total 12
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:21 ./
-	drwxr-xr-x 27 labcom labcom 4096 ago 8 09:15 ../
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:22 CommunicationsII_2024_2_B1_ONV/
-
-labcom@labcom-Profe:~/grupoONV10$ ll CommunicationsII_2024_2_B1_ONV
-  Rta:  total 16
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:22 ./
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:21 ../
-	drwxrwxr-x 8 labcom labcom 4096 ago 8 09:22 .git/
-	-rw-rw-r-- 1 labcom labcom 124 ago 8 09:22 README.md
-
-labcom@labcom-Profe:~/grupoONV10$ mkdir Practica0                                                       
-labcom@labcom-Profe:~/grupoONV10$ cd																
-labcom@labcom-Profe:~$ cp /home/labcom/Descargas/uy.jpg /home/labcom/grupoONV10/Practica0               (Ahora trasladamos el archivo de uy.jpg para Practica0)
-
-labcom@labcom-Profe:~$ cd grupoONV10
-labcom@labcom-Profe:~/grupoONV10$ ll
-  Rta:  total 16
-	drwxrwxr-x 4 labcom labcom 4096 ago 8 09:37 ./
-	drwxr-xr-x 27 labcom labcom 4096 ago 8 09:15 ../
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:22 CommunicationsII_2024_2_B1_ONV/		
-	drwxrwxr-x 2 labcom labcom 4096 ago 8 09:46 Practica0/				                (Ahora tenemos que pasar Practiva0 a Cominicatio..)
-
-labcom@labcom-Profe:~/grupoONV10$ cd
-labcom@labcom-Profe:~$ mv /home/labcom/grupoONV10/Practica0 /home/labcom/grupoONV10/CommunicationsII_2024_2_B1_ONV/     (Movemos Practica0 al repositorio Communi...)
-labcom@labcom-Profe:~$ cd grupoONV10/
-labcom@labcom-Profe:~/grupoONV10$ cd CommunicationsII_2024_2_B1_ONV/
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ ll
-  Rta:  total 20
-	drwxrwxr-x 4 labcom labcom 4096 ago 8 09:50 ./
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:50 ../
-	drwxrwxr-x 8 labcom labcom 4096 ago 8 09:22 .git/
-	drwxrwxr-x 2 labcom labcom 4096 ago 8 09:46 Practica0/
-	-rw-rw-r-- 1 labcom labcom 124 ago 8 09:22 README.md						(Ya supervisado que este Practica0 en nuestro repositorio podemos agregar la imagen)
-
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git status
-  Rta:  En la rama main
-	Tu rama está actualizada con 'origin/main'.
-
-	Archivos sin seguimiento:
-	(usa "git add ..." para incluirlo a lo que se será confirmado)
-	Practica0/
-
-	no hay nada agregado al commit pero hay archivos sin seguimiento presentes (usa "git add" para hacerles seguimiento)
-
-	El comando más similar es
-	add												(No encontramos un estado nuevo por ello tenemos que agregar "add")
-	
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git add .										
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git status
-  Rta:  En la rama main
-	Tu rama está actualizada con 'origin/main'.
-
-	Cambios a ser confirmados:
-	(usa "git restore --staged ..." para sacar del área de stage)
-	nuevos archivos: Practica0/uy.jpg
+      { \scriptsize
+      \centering
+        \begin{tabular}{|c|c|c|c|c|c|} 
+             \hline
+            Ruido & Media & Media & RMS &Potencia& Desviación \\ 
+             &  &cuadrada& & promedio  &estandar \\ \hline
+           0 (1)  & 0  &  0.5002 & 0.7073 &0.5002 &0.7073 \\ \hline
+           0 (2)   & 0 & 0.5000 &  0.7071& 0.5000& 0.7071\\ \hline
+           0.25 (1)  & 0  & 0.5003& 0.7073 &0.5003 &0.7073 \\ \hline
+           0.25 (2)   & 0 & 0.5001&  0.7071& 0.5002& 0.7072\\ \hline
+           0.05 (1)  &0.0001  & 0.5028 &  0.7091& 0.5028 & 0.7088\\ \hline
+           0.05 (2) &0  & 0.5008 &  0.7077& 0.5008 &0.7077 \\ \hline
+           0.1 (1)  & 0 &0.5113 & 0.7152 & 0.5112 &0.7141 \\ \hline
+           0.1 (2) &  0.0002& 0.5100 & 0.7138& 0.5100 & 0.7137\\ \hline
+        \end{tabular}
+        \\Tabla 3.1. Resultados de los bloques de estadística(1) y aplicación(2) para diferentes niveles de ruido en una señal seno.
+        \label{tab:my_label}
+}
+    \\
+    Todos los bloques y códigos se encuentran en el repositorio de GitHub \url{https://github.com/ValeriaS57/CommunicationsII_2024_2_B1_ONV/tree/834a6792b8bf02a7dda7d7d4ef9ec1b615370e61/Practica_1}
 
 
-	El comando más similar es
-	commit-tree
-	labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git commit -m "Practica0_Imagen_añadida"
-
-	*** Por favor cuéntame quién eres.
-
-	Ejecuta
-
-	git config --global user.email "you@example.com"
-	git config --global user.name "Tu Nombre"
-
-	para configurar la identidad por defecto de tu cuenta.
-	Omite --global para configurar tu identidad solo en este repositorio.
-	fatal: no es posible auto-detectar la dirección de correo (se obtuvo 'labcom@labcom-Profe.(none)')		(Ahora si podemos continuar)
-
-
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git config --global user.email labcom@labcom-Profe
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git commit -m "Practica0_Imagen_añadida"               (Finalmente...)
-  Rta:  [main 675a962] Practica0_Imagen_añadida
-	1 file changed, 0 insertions(+), 0 deletions(-)
-	create mode 100644 Practica0/uy.jpg
-
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git push						(Subimos del repositorio local al sevidor)
-
-  Rta:  Warning: Permanently added the ECDSA host key for IP address '140.82.112.3' to the list of known hosts.
-	Enumerando objetos: 5, listo.
-	Contando objetos: 100% (5/5), listo.
-	Compresión delta usando hasta 12 hilos
-	Comprimiendo objetos: 100% (3/3), listo.
-	Escribiendo objetos: 100% (4/4), 102.40 KiB | 1.28 MiB/s, listo.
-	Total 4 (delta 0), reusado 0 (delta 0)
-	To github.com:ValeriaS57/CommunicationsII_2024_2_B1_ONV.git
-	b8a6f34..675a962 main -> main
-
+\section{Conclusiones}
+\\
+Referente al desarrollo de los códigos propuestos se le hicieron pequeñas modificaciones como arreglar la indentación, cambiar unas comillas y corregir el orden de unas líneas de código para su correcto funcionamiento. En el caso del bloque acumulador y diferenciador si tenemos una señal que su media no es cero, y sus valores están sobre el eje positivo los valores de salida de los bloques tienden a infinito, pero en la realidad de la implementación llegan a un punto donde se desbordan y  reinicia la operación como ocurría en sistemas digitales.\\\\
+\noindent
+Comparando la programación del bloque estadístico que utilizó los códigos propuestos en el libro guía y el código de la aplicación modificado con funciones propias de Python obtenidas de la librería NumPy, tal como np.mean(), así como el uso de ventanas de tamaño $2^{12}$ muestras para mejorar los valores, se observa que presenta una gran exactitud cuando su ruido es cero, pero mientras más crece sus valores varían un poco entre ellos y tarda más para estabilizarse en comparación al código propuesto.\\\\
+\noindent
