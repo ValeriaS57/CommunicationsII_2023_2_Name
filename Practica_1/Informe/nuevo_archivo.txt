@@ -1,0 +1,3 @@
+\begin{abstract}
+    In this practice, fundamental concepts in the field of communications were explored using GNU Radio, developing blocks that simulate an accumulator and a differentiator applied to time-based signals or repetitive vectors. A block for statistical analysis was also included, evaluating both interference-free signals and signals with Gaussian distortion that were filtered to mitigate the effects of noise, demonstrating the effectiveness of the filter application for signals affected by disturbances. 
+\end{abstract}\\  
