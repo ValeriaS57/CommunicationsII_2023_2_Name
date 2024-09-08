@@ -158,5 +158,5 @@ labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git push						(
 	Escribiendo objetos: 100% (4/4), 102.40 KiB | 1.28 MiB/s, listo.
 	Total 4 (delta 0), reusado 0 (delta 0)
 	To github.com:ValeriaS57/CommunicationsII_2024_2_B1_ONV.git
-	b8a6f34..675a962 main -> main
+	b8a6f34..675a962 main
 
