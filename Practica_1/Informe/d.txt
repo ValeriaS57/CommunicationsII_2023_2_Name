@@ -1,162 +1,21 @@
+\begin{abstract}
+    In this practice, fundamental concepts in the field of communications were explored using GNU Radio, developing blocks that simulate an accumulator and a differentiator applied to time-based signals or repetitive vectors. A block for statistical analysis was also included, evaluating both interference-free signals and signals with Gaussian distortion that were filtered to mitigate the effects of noise, demonstrating the effectiveness of the filter application for signals affected by disturbances. 
+\end{abstract}\\  
+ \textbf{Palabras clave: Blocks simulate, GNU Radio, Accumulator, Differentiator } \color{black
+\\
 
-labcom@labcom-Profe:~$ git --version               							 (Con esto miramos la version de Git)
+\section{Introducción}
 
- Rta:   git version 2.25.1
+Para la correcta construcción de un sistema de comunicación, es esencial comprender las diversas características de la señal, lo que permite realizar los tratamientos adecuados y mejorar la eficiencia del sistema. Estas características se conocen como parámetros fundamentales, entre estos se encuentran la amplitud, frecuencia, fase y período. Cada uno de estos factores influye directamente en el comportamiento y rendimiento del sistema de comunicación\cite{Ortega2019}.\\\\
+\noindent
+Sin embargo, estos parámetros fundamentales son más fáciles de identificar en señales determinísticas, es decir, aquellas que se mantienen consistentes y predecibles a lo largo del tiempo, siendo de esta forma predecibles. En su contraparte tendremos las señales aleatorias, requieren de diversos procesos para ser captados, ya que como su nombre lo indica son impredecibles. Una solución óptima es trabajar con parámetros probabilísticos, permitiéndonos tener un rango más claro sobre el comportamiento de la señal y realizar aproximaciones precisas de sus características\cite{YangSung}.\\\\
+\noindent
+Los parámetros probabilísticos que se utilizan incluyen la varianza, la media, la media cuadrática(M.C.), la potencia promedia, el valor RMS y desviación estándar(D.E.). Debido a la naturaleza variable de la señal, es necesario analizar la señal en segmentos de tiempos pequeños. Al hacerlo, se pueden calcular estadísticas locales que reflejan el comportamiento de la señal con mayor precisión, que si analizáramos intervalos mucho más grandes, a esto se le conoce como la teoría de las señales aleatorias\cite{YangSung}.\\\\
+\noindent
+Para desarrollar sistemas de comunicación avanzados, es posible implementar parámetros probabilísticos mediante el uso de bloques programados en Python dentro del entorno de GNU Radio. Esta capacidad de programación ofrece una flexibilidad mucho mayor en comparación con los bloques predefinidos del software, ya que permite personalizar y ajustar parámetros de manera específica según las necesidades del proyecto. Esto no solo facilita la optimización del rendimiento del sistema, sino que también permite la integración de algoritmos complejos, el procesamiento de señales en tiempo real y el control preciso de aspectos críticos, como el filtrado de señales. Al aprovechar la programación en Python, se pueden diseñar soluciones más robustas y adaptadas a escenarios específicos, lo que resulta fundamental en aplicaciones modernas de telecomunicaciones\cite{Ortega2019}.
 
+\section{Conclusiones}
 
-labcom@labcom-Profe:~$ ssh-keygen -t ed25519        				          		 (Con esto generabamos la clave)
+\setlength{\parskip}{0pt}  % Sin espacio entre párrafos
 
- Rta:   Generating public/private ed25519 key pair.				                         (Se genera clave publica y privada)  			
-        Enter file in which to save the key (/home/labcom/.ssh/id_ed25519):                              (Clave adicional para ver donde esta esta clave o ingreso) 
-        Enter passphrase (empty for no passphrase):
-        Enter same passphrase again:
-        Your identification has been saved in /home/labcom/.ssh/id_ed25519                               (Donde esta guardado)
-	Your public key has been saved in /home/labcom/.ssh/id_ed25519.pub
-	The key fingerprint is:
-	SHA256:9T9aRoOoNpHTXvh7adjSL9GqgI9+aq4i1IIQE+k+6sA labcom@labcom-Profe
-	The key's randomart image is:
-	+--[ED25519 256]--+
-	|.o |
-	|+ |
-	|.o . |
-	|.. + + . |
-	|o. . S + + o. |
-	|ooo . * o o...|
-	|oE.. = o .+=+ |
-	|o . . ..+..o=O. |
-	|.. . ..==o. += o.|
-	+----[SHA256]-----+
-
-labcom@labcom-Profe:~$ gedit /home/labcom/.ssh/id_ed25519.pub						(Con el comando gedit abrimos la carpeta para editar en este archivo)
-												         "Edita contenido de clave publica"
-
------------------------------
-
-labcom@labcom-Profe:~$ mkdir /home/labcom/grupoONV10						        (Creamos una nueva carpeta "grupoONV10", dentro del directorio "home" del usuario "labcom")
-labcom@labcom-Profe:~$ ls /home/labcom									ls es para ver que hay dentro de la direccion establecida	
- Rta:   asd.grc grupoONV10 prueba.py
-        asd.py Imágenes Prueba.py
-        default_epy_block_0.py lol_epy_block_0.py Público
-	default_epy_block_1.py lol_epy_block_2.py __pycache__
-	default.py lol.grc snap
-	Descargas lol.py TransmisorQAM.grc
-	Documentos 'Modulador QAM.grc' TransmisorQAM.py
-	Escritorio Modulador_QAM.grc untitled.grc
-	gmsk.py ModuladorQAM.grc Vídeos
-	gr-ModulosEfren Música workarea
-	gr-satellites Plantillas
-
-labcom@labcom-Profe:~$ cd grupoONV10								                 (Cambiamos de directorio: "change directory")
-labcom@labcom-Profe:~/grupoONV10$ git clone git@github.com:ValeriaS57/CommunicationsII_2024_2_B1_ONV.git         (Clonamos un repositorio de Git desde GitHub en nuestra máquina local)
- Rta:   Clonando en 'CommunicationsII_2024_2_B1_ONV'...
-        The authenticity of host 'github.com (140.82.112.4)' can't be established.
-	ECDSA key fingerprint is SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM.
-	Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-	Warning: Permanently added 'github.com,140.82.112.4' (ECDSA) to the list of known hosts.
-	remote: Enumerating objects: 6, done.
-	remote: Counting objects: 100% (6/6), done.
-	remote: Compressing objects: 100% (4/4), done.
-	remote: Total 6 (delta 1), reused 0 (delta 0), pack-reused 0
-	Recibiendo objetos: 100% (6/6), listo.
-	Resolviendo deltas: 100% (1/1), listo.
-
-labcom@labcom-Profe:~/grupoONV10$ ls						                        (Para comprobar si se copio correctamente)
- Rta:   CommunicationsII_2024_2_B1_ONV
-
-labcom@labcom-Profe:~/grupoONV10$ ls CommunicationsII_2024_2_B1_ONV				        (Mirabamos el contenido de nuestro repositorio)
- Rta:   README.md
-
-labcom@labcom-Profe:~/grupoONV10$ ll									(Muestra de forma detallada)	
- Rta:   total 12
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:21 ./
-	drwxr-xr-x 27 labcom labcom 4096 ago 8 09:15 ../
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:22 CommunicationsII_2024_2_B1_ONV/
-
-labcom@labcom-Profe:~/grupoONV10$ ll CommunicationsII_2024_2_B1_ONV
-  Rta:  total 16
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:22 ./
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:21 ../
-	drwxrwxr-x 8 labcom labcom 4096 ago 8 09:22 .git/
-	-rw-rw-r-- 1 labcom labcom 124 ago 8 09:22 README.md
-
-labcom@labcom-Profe:~/grupoONV10$ mkdir Practica0                                                       
-labcom@labcom-Profe:~/grupoONV10$ cd																
-labcom@labcom-Profe:~$ cp /home/labcom/Descargas/uy.jpg /home/labcom/grupoONV10/Practica0               (Ahora trasladamos el archivo de uy.jpg para Practica0)
-
-labcom@labcom-Profe:~$ cd grupoONV10
-labcom@labcom-Profe:~/grupoONV10$ ll
-  Rta:  total 16
-	drwxrwxr-x 4 labcom labcom 4096 ago 8 09:37 ./
-	drwxr-xr-x 27 labcom labcom 4096 ago 8 09:15 ../
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:22 CommunicationsII_2024_2_B1_ONV/		
-	drwxrwxr-x 2 labcom labcom 4096 ago 8 09:46 Practica0/				                (Ahora tenemos que pasar Practiva0 a Cominicatio..)
-
-labcom@labcom-Profe:~/grupoONV10$ cd
-labcom@labcom-Profe:~$ mv /home/labcom/grupoONV10/Practica0 /home/labcom/grupoONV10/CommunicationsII_2024_2_B1_ONV/     (Movemos Practica0 al repositorio Communi...)
-labcom@labcom-Profe:~$ cd grupoONV10/
-labcom@labcom-Profe:~/grupoONV10$ cd CommunicationsII_2024_2_B1_ONV/
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ ll
-  Rta:  total 20
-	drwxrwxr-x 4 labcom labcom 4096 ago 8 09:50 ./
-	drwxrwxr-x 3 labcom labcom 4096 ago 8 09:50 ../
-	drwxrwxr-x 8 labcom labcom 4096 ago 8 09:22 .git/
-	drwxrwxr-x 2 labcom labcom 4096 ago 8 09:46 Practica0/
-	-rw-rw-r-- 1 labcom labcom 124 ago 8 09:22 README.md						(Ya supervisado que este Practica0 en nuestro repositorio podemos agregar la imagen)
-
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git status
-  Rta:  En la rama main
-	Tu rama está actualizada con 'origin/main'.
-
-	Archivos sin seguimiento:
-	(usa "git add ..." para incluirlo a lo que se será confirmado)
-	Practica0/
-
-	no hay nada agregado al commit pero hay archivos sin seguimiento presentes (usa "git add" para hacerles seguimiento)
-
-	El comando más similar es
-	add												(No encontramos un estado nuevo por ello tenemos que agregar "add")
-	
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git add .										
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git status
-  Rta:  En la rama main
-	Tu rama está actualizada con 'origin/main'.
-
-	Cambios a ser confirmados:
-	(usa "git restore --staged ..." para sacar del área de stage)
-	nuevos archivos: Practica0/uy.jpg
-
-
-	El comando más similar es
-	commit-tree
-	labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git commit -m "Practica0_Imagen_añadida"
-
-	*** Por favor cuéntame quién eres.
-
-	Ejecuta
-
-	git config --global user.email "you@example.com"
-	git config --global user.name "Tu Nombre"
-
-	para configurar la identidad por defecto de tu cuenta.
-	Omite --global para configurar tu identidad solo en este repositorio.
-	fatal: no es posible auto-detectar la dirección de correo (se obtuvo 'labcom@labcom-Profe.(none)')		(Ahora si podemos continuar)
-
-
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git config --global user.email labcom@labcom-Profe
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git commit -m "Practica0_Imagen_añadida"               (Finalmente...)
-  Rta:  [main 675a962] Practica0_Imagen_añadida
-	1 file changed, 0 insertions(+), 0 deletions(-)
-	create mode 100644 Practica0/uy.jpg
-
-labcom@labcom-Profe:~/grupoONV10/CommunicationsII_2024_2_B1_ONV$ git push						(Subimos del repositorio local al sevidor)
-
-  Rta:  Warning: Permanently added the ECDSA host key for IP address '140.82.112.3' to the list of known hosts.
-	Enumerando objetos: 5, listo.
-	Contando objetos: 100% (5/5), listo.
-	Compresión delta usando hasta 12 hilos
-	Comprimiendo objetos: 100% (3/3), listo.
-	Escribiendo objetos: 100% (4/4), 102.40 KiB | 1.28 MiB/s, listo.
-	Total 4 (delta 0), reusado 0 (delta 0)
-	To github.com:ValeriaS57/CommunicationsII_2024_2_B1_ONV.git
-	b8a6f34..675a962 main -> main
-
+De igual manera, respecto a la visualización de las salidas continuas, se concluye que  en el caso del acumulador y el diferenciador es mejor utilizar bloques QT GUI Time Sink para visualizar como varía la forma de la señal a través del tiempo, mientras que en el caso del bloque de estadística y vectores  es mejor QT GUI Number Sink para poder visualizar sus valor numérico.
