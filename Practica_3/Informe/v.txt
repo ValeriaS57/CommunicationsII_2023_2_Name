@@ -1,1 +1,90 @@
+   
+
+\section{Introducción}
+
+En las comunicaciones modernas la modulación de señales juega un papel fundamental para garantizar la transmisión  de información a través de diferentes medios. Por ello es necesario comprender las diferencias entre la modulación en radiofrecuencia (RF) y la representación en envolvente compleja (EC).\\
+
+\noindent
+ Por lo anterior se define que  radiofrecuencia (RF) se refiere a la modulación que ocurre en la gama de frecuencias dentro del espectro electromagnético utilizadas para la transmisión de señales \cite{britannica_telecommunications}. Mientras que, la envolvente compleja (EC) es una representación matemática que descompone una señal modulada en sus componentes en banda base (señales I y Q), lo que facilita su análisis y procesamiento al reducir la complejidad de las operaciones involucradas\cite{electroagenda_envolvente_compleja}.\\
+
+\noindent
+Este enfoque permite explorar cómo diferentes esquemas de modulación digital, como OOK, BPSK y FSK, se comportan en estas dos representaciones. Entender la relación entre RF y EC es crucial, ya que esta última ofrece ventajas significativas en términos de eficiencia claridad en la interpretación de fenómenos como los cambios de fase y frecuencia en una señal.
+\section{Procedimiento}
+
+    \setlength{\itemsep}{\baselineskip} 
+    \setlength{\parskip}{0pt}   % Reduce espacio entre párrafos
+    \item Para la práctica 3 se abre una nueva rama en Github. Luego se crea un directorio llamado Practica\_3, donde habrá dos sub carpetas, GNURadio e Informe (para ir reportando los resultados). En GNU Radio se abre \underline{RF EC ook.grc}, este archivo se encuentra en: \href{https://github.com/hortegab/ComdigPractices2021sii/blob/main/Fase%20I/Pract4/RF_EC_ook.grc}{\textcolor{blue}{\underline{enlace}}}. \\
+
+     \noindent Primero, se implementa el flujograma del enlace anterior para verificar el funcionamiento de una señal OOK  tanto en versión RF como en EC (Envolvente Compleja ). Para esto, se utiliza una secuencia de bloques en GNU Radio  de la Fig.\ref{fig:ook}\\
+
+    \begin{figure}[H]  % Utiliza [H] para que la imagen aparezca justo donde está el código
+    \centering
+    \begin{minipage}{\linewidth}
+        \centering
+        \includegraphics[scale=0.6]{figs/ook_flujo.png}
+        \caption{Bloques para la representación de una señal OOK}
+        \label{fig:ook}  % Etiqueta para referenciar la figura
+    \end{minipage}
+    \end{figure}
+    \vspace{-0.25cm}
+    \noindent
+
+\noindent Con base lo anterior se realizo un análisis del comportamiento de la señal en ambas versiones con diferentes frecuencias para posteriormente describir sus diferencias.
+
+
+
+   
+    
+
+    \noindent 6. Comprender a fondo el funcionamiento tanto del bloque $\textnormal{e\_RF\_VCO\_ff}$ como el bloque $\textnormal{e\_CE\_VCO\_fc}$ es fundamental porque estos se encargan de la creación de las señales banda pasante, y banda base, por ende se debe tener presentes como interactúan las señales de entrada con la ecuación implícita en cada bloque, para predecir una salida y no cometer errores. Estos bloques, al estar programados en Python, permiten adicionar mensajes de ayuda para comprender los puntos claves del bloque.\\
+
+    \noindent A continuación se presenta cada "Help" de los bloques mencionados, dividiéndose en entradas, parámetros y recomendaciones: 
+
+    \begin{figure}[H] 
+        \centering
+        \begin{minipage}{\linewidth}
+                \centering
+                \includegraphics[scale=0.5]{figs/Block_RFVCO.png}
+                \caption{Help $\textnormal{e\_RF\_VCO\_ff}$}
+                \label{fig:128k}  % Etiqueta para referenciar la figura
+            \end{minipage}
+            \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{\linewidth}
+                \centering
+                \includegraphics[scale=0.6]{figs/Block_CE_VCO.png}
+                \caption{Help $\textnormal{e\_CE\_VCO\_fc}$}
+                \label{fig:128k}  % Etiqueta para referenciar la figura
+            \end{minipage}
+            \end{figure}
+
+    
+    \\
+    \noindent 7. Para adaptar el diagrama de flujo a la modulación BPSK en versiones RF y EC, se activa el bloque "multiply const" con una constante de \( \pi \) y se ajusta el bloque "constant source" a un valor de 1, como se muestra en la Figura\ref{fig:sa11}.
+    \begin{figure}[H] 
+        \centering
+        \begin{minipage}{\linewidth}
+            \centering
+            \includegraphics[scale=0.4]{figs/block.png}
+            \caption{Bloques GNURadio para modulación BPSK.}
+            \label{fig:sa11}  % Etiqueta para referenciar la figura
+        \end{minipage}
+        \end{figure}
+    
+\section{Resultados}
+
+Con la implementación de la señal OOK (ver Fig.\ref{fig:128k}) se observo que su versión EC no se ve afectada aunque se varié la frecuencia de la portadora. Por lo tanto, se puede inducir que respecto a su versión RF se diferencia en que la frecuencia de la portadora influye en la la modulación y transmisión de la señal en la banda de radiofrecuencia mientras que la EC no, debido a que sus componentes en fase (I) y en cuadratura (Q) varían entre (0,0) y (1,0) respectivamente como se observa en su diagrama de constelaciones sin importar la frecuencia.
+
+
+  \begin{figure}[H]  % Utiliza [H] para que la imagen aparezca justo donde está el código
+    \centering
+    \begin{minipage}{\linewidth}
+        \centering
+        \includegraphics[scale=0.2]{figs/ook_128k.png}
+        \caption{Señal OOK en RF como en EC para una frecuencia de la portadora de 128 [kHz]}
+        \label{fig:128k}  % Etiqueta para referenciar la figura
+    \end{minipage}
+    \end{figure}
 
